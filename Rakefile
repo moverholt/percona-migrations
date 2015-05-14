@@ -5,5 +5,7 @@ begin
   RSpec::Core::RakeTask.new(:spec)
 
   task default: :spec
+
+  import './lib/tasks/percona_migrations.rake'
 rescue LoadError
 end

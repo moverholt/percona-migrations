@@ -48,6 +48,16 @@ class AddAddressToUsers < ActiveRecord::Migration
 end
 ```
 
+### Shell script generation (Experimental)
+
+Usage: rake percona_migrations:create_shell_script[20150424233921]
+
+Notes:
+* The migration must have an 'up' and it doesn't do 'down'.
+* You can't dynamically create migration like above example. The 'percona_alter_table' call must be complete like: `percona_alter_table :users, "ADD COLUMN TEST VARCHAR(255)`  
+* You can only alter 1 table. (Will error if you have mulitple tables in same migration.)
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/percona-migrations/fork )

@@ -1,0 +1,28 @@
+DATABASE="berecruiteddb"
+TABLE="<%= table %>"
+
+<% alters.each_with_index do |alter, i| %>
+ALTER=<%= i == 0 ? "" : "+" %>"<%= i == 0 ? "" : ", " %><%= alter %>"
+<% end %>
+
+RUNS=(dry-run execute)
+
+for flag in ${RUNS[@]}; do
+  COMMAND="pt-online-schema-change --alter '${ALTER}' --${flag} D=${DATABASE},t=${TABLE}"
+
+  echo ""
+  echo $COMMAND
+  echo "Hit enter to run the command above"
+  read dummy
+
+  eval $COMMAND
+
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+done
+
+VERSION="<%= version %>"
+SQL="use berecruiteddb; INSERT INTO schema_migrations (version) VALUES ('${VERSION}')"
+
+mysql -D $DATABASE -e "$SQL"

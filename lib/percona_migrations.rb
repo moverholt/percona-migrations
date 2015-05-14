@@ -1,9 +1,12 @@
 require 'percona_migrations/version'
 require 'percona_migrations/runners'
 require 'percona_migrations/helper_methods'
+require 'percona_migrations/shell_script_generator'
 
 require 'active_record'
 require 'logger'
+
+require 'percona_migrations/railtie' if defined?(Rails)
 
 module PerconaMigrations
   extend self
